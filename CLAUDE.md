@@ -10,21 +10,23 @@
 
 ### 새 기기에서 적용 방법
 ```bash
-# Windows (PowerShell)
-Copy-Item -Recurse ~/.claude/sync/* ~/.claude/ -Force
-
-# macOS/Linux
-cp -r ~/.claude/sync/* ~/.claude/
+# 1. sync 폴더를 USB/클라우드에서 복사
+# 2. 설정 적용
+cp ~/.claude/sync/settings.json ~/.claude/
+cp ~/.claude/sync/CLAUDE.md ~/.claude/
+cp ~/.claude/sync/statusline.sh ~/.claude/
+cp -r ~/.claude/sync/commands ~/.claude/
+cp -r ~/.claude/sync/output-styles ~/.claude/
 ```
 
 ### 동기화 대상 파일
 | 파일 | 설명 |
 |------|------|
-| `settings.json` | 모델, 권한, 플러그인, hooks |
+| `settings.json` | 모델(opusplan), 권한, 플러그인 |
 | `CLAUDE.md` | 전역 지침 |
-| `statusline.py` | 상태 표시줄 |
+| `statusline.sh` | 상태 표시줄 |
 | `commands/` | 슬래시 명령어 |
-| `agents/` | 서브에이전트 |
+| `output-styles/` | 출력 스타일 |
 
 ### 동기화 금지 파일
 - `.credentials.json` (인증 정보)
@@ -102,6 +104,15 @@ cp -r ~/.claude/sync/* ~/.claude/
 - 완료 즉시 마크
 - 완전히 완료 시에만 completed (에러/블로커 없을 때)
 
+### 형식
+```json
+{
+  "content": "테스트 실행",
+  "activeForm": "테스트 실행 중",
+  "status": "in_progress"
+}
+```
+
 ### 사용자 승인 타이밍
 **반드시 승인 필요**:
 - 복잡한 작업 계획 확정 전
@@ -112,6 +123,15 @@ cp -r ~/.claude/sync/* ~/.claude/
 - 명확한 버그 수정
 - 단순 기능 추가
 - 명시적 요청사항
+
+---
+
+## 📝 자동 작업 기록
+
+### Task Logger (자동 트리거)
+- 파일 변경/버그 수정/새 기능/리팩토링 완료 시 `task.md`에 기록
+- 파일 읽기/질문 답변/정보 조회만 한 경우는 생략
+- **시간대**: 서울 표준시(KST, UTC+9) `[HH:MM KST]` 형식
 
 ---
 
